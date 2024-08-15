@@ -1,0 +1,199 @@
+:root * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+
+	--scale-master: 0.0000001rem;
+
+	--size-multiplier: 0.001rem;
+}
+
+body {
+	/* z-index: 8; */
+	width: 100%;
+	/* height: 100%; */
+	height: 100vh;
+	background: linear-gradient(to left, #0b1a34, #11264e);
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+.drag-handle {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+	z-index: 9;
+
+	cursor: move; /* fallback if grab cursor is unsupported */
+	/* cursor: grab; */
+	/* cursor: -moz-grab; */
+	/* cursor: -webkit-grab; */
+}
+
+.drag-handle:active {
+	cursor: grabbing;
+	cursor: -moz-grabbing;
+	cursor: -webkit-grabbing;
+}
+
+.zoomable {
+	/* transform: scale(1); */
+	transform: scale(0.001);
+	/* scale: 0.001; */
+	z-index: 12;
+
+	/* transition: 0.1s; */
+}
+
+#solarSystem {
+	z-index: 10;
+	position: absolute;
+	width: 0;
+	height: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	/* object-fit: scale-down; */
+	/* scale: 0.5; */
+}
+
+.star,
+.planet,
+.moon {
+	position: absolute;
+	transform-origin: 50% 50%;
+	aspect-ratio: 1/1;
+	border-radius: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.star::before {
+	/* z-index: 10; */
+	background: rgb(255, 229, 24);
+	background: radial-gradient(circle, rgba(255, 229, 124, 0.9) 10%, rgba(255, 255, 255, 0) 50%);
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 500%;
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	pointer-events: none;
+	/* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
+}
+
+/* .star::after {
+	background: radial-gradient(circle, rgba(255, 229, 124, 0.9) 0%, rgba(255, 255, 255, 0) 50%);
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 300%;
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+} */
+
+.planet::before {
+	/* orbit ring */
+	z-index: 0;
+	content: "";
+	position: absolute;
+	top: calc(50% - calc(calc(var(--scale-master) * var(--distance-planet)) * 100));
+	left: 50%;
+	width: calc(calc(var(--scale-master) * var(--distance-planet)) * 100 * 2);
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	/* border: 0.25rem solid rgba(255, 255, 255, 0.4); */
+	border: 0.25rem solid rgba(255, 105, 180, 0.4);
+	pointer-events: none;
+}
+
+.moon::before {
+	/* orbit ring */
+	z-index: 0;
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: calc(50% - calc(calc(var(--scale-master) * var(--distance-moon)) * 200));
+	width: calc(calc(var(--scale-master) * var(--distance-moon)) * 200 * 2);
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	border: 0.25rem solid rgba(255, 255, 255, 0.4);
+	border: 0.25rem solid rgba(255, 105, 180, 0.4);
+	pointer-events: none;
+}
+
+.planet::after,
+.moon::after {
+	/* highlight marker around planets and moons */
+	z-index: 0;
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: calc(50px + 500%);
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	border: 0.25rem solid rgba(255, 255, 255, 0.4);
+	pointer-events: none;
+}
+
+.star {
+	z-index: 13;
+	/* width: 5rem; */
+	width: calc(var(--size-multiplier) * var(--radius-star));
+	background-color: #ffd028;
+	min-width: 2px;
+
+	.planet {
+		z-index: calc(14 + var(--i-planet));
+		width: 0.5rem;
+		width: calc(var(--size-multiplier) * var(--radius-planet));
+		/* background-color: var(--background-color); */
+		--noise: calc(sin(calc(var(--i-planet) * 200) * 200)); /* range: -1..1 */
+		--noise-rot: calc(var(--noise) * 10000deg); /* range: many, many "laps" (1 lap = 360deg) removing or adding another zero really doesn't matter. Affects individual starting orbit position. */
+
+		transform: translateY(calc(calc(var(--scale-master) * var(--distance-planet)) * 100));
+		animation: orbit calc(5s * var(--orbit-planet)) linear 0s infinite normal forwards;
+		animation-composition: add;
+
+		.moon {
+			background-color: chartreuse;
+			z-index: calc(14 + var(--i-planet) + var(--i-moon));
+			width: 0.5rem;
+			width: calc(var(--size-multiplier) * var(--radius-moon));
+
+			--noise: calc(sin(calc(var(--i-moon) + calc(var(--i-planet) * 200)) * 200)); /* range: -1..1 */
+			--noise-rot: calc(var(--noise) * 10000deg); /* range: many, many "laps" (1 lap = 360deg) removing or adding another zero really doesn't matter. Affects individual starting orbit position. */
+			transform: translateX(calc(calc(var(--scale-master) * var(--distance-moon)) * 200));
+
+			animation: orbit calc(5s * var(--orbit-moon)) linear 0s infinite normal forwards;
+			animation-composition: add;
+		}
+	}
+}
+
+/* if the name isn't "orbit", i've changed it temporarily and forgotten to revert it */
+@keyframes orbit {
+	from {
+		rotate: var(--noise-rot);
+	}
+	to {
+		rotate: calc(var(--noise-rot) + 360deg);
+	}
+}
