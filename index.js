@@ -185,8 +185,10 @@ function createPlanetElements() {
 			}
 		}
 	}
+	return planets; // might as well
 }
 
+// creates HTML elements for all moons of a given planet
 function createMoonElements(planetId = null) {
 	console.log("F: createMoonElements:", planetId);
 
@@ -197,7 +199,7 @@ function createMoonElements(planetId = null) {
 
 	if (typeof myMoons === "object") {
 		for (let i = 0; i < myMoons.length; i++) {
-			// code here = "for each moon":
+			// "for each moon..."
 
 			// create html tag
 			let newMoon = document.createElement("div");
@@ -208,12 +210,13 @@ function createMoonElements(planetId = null) {
 			--orbit-moon: ${myMoons[i].sideralOrbit};
 			--distance-moon: ${myMoons[i].semimajorAxis};
 			`;
-
+			addHoverListenerFor(newMoon);
 			// add newly created HTML tag to document
 			planetHTML.appendChild(newMoon);
 			console.log(`Added moon "${myMoons[i].id}"`);
 		}
 	}
+	return myMoons; // might as well
 }
 
 function getScaleFactor() {
@@ -322,6 +325,7 @@ function addHoverListenerFor(celestial) {
 	// });
 
 	celestial.addEventListener("mouseenter", () => {
+		document.querySelector("#nameHeader").textContent = celestial.id; // Visa planetens namn vid hover
 		document.querySelector("#nameHeader").textContent = celestial.id; // Visa planetens namn vid hover
 	});
 	celestial.addEventListener("mouseleave", () => {

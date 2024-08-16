@@ -1,0 +1,113 @@
+:root {
+	--color-nav-button: #cf5c57;
+	--color-nav-bg: #222;
+
+	--color-nav-text-h: #fff;
+	--color-nav-text-nums: #aaa;
+	--color-nav-text-p: #777;
+
+	--color-main-text-h1: #000;
+	--color-main-text-h2: #5a5a5a;
+
+	--slide-duration: 0.2s;
+	--slide-delay: 0.2s;
+	--anim-index: 0; /* is set individually in inline css for animated elements.*/
+}
+
+#menu {
+	display: none;
+	padding: 4rem 0 0;
+	background-color: var(--color-nav-bg);
+	width: 20rem;
+	height: 100vh;
+	position: absolute;
+	top: 0;
+	left: 0;
+	/* transition: 0.3s; */
+
+	aside {
+		color: var(--color-nav-text-nums);
+		text-align: center;
+		transition: 0.2s;
+	}
+
+	h3 {
+		color: var(--color-nav-text-h);
+		margin: 0 0 0.5rem;
+	}
+
+	p {
+		color: var(--color-nav-text-p);
+		font-size: small;
+	}
+
+	h1 {
+		font-size: xxx-large;
+	}
+
+	h2 {
+		color: var(--color-main-text-h2);
+	}
+}
+
+#menu.open {
+	display: initial;
+	/* transition: 0.3s; */
+}
+
+a,
+button {
+	text-decoration: none;
+	font-style: normal;
+}
+
+a {
+	text-decoration: none;
+	font-style: normal;
+}
+
+a.menu-item {
+	display: grid;
+	grid-template-columns: 4rem auto;
+	padding: 1rem 1rem 1rem 0;
+	/* transition: 0.3s; */
+	animation: slide var(--slide-duration) linear calc(var(--slide-delay) * var(--anim-index)) backwards;
+}
+
+a.menu-item:hover {
+	background-color: #333;
+	position: relative;
+	/* transition: 0.3s; */
+	/* border-left: 0.5rem #555 solid; */
+	/* padding-right: 0.5rem; */ /*compensating for border width */
+}
+
+a.menu-item:active {
+	background-color: #444;
+	transition: 0s;
+	border-color: #666;
+}
+
+button.toggle {
+	/* pointer-events: none; */
+
+	display: flex;
+	position: absolute;
+	top: 1.5rem;
+	left: 1.5rem;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50px;
+	background-color: var(--color-nav-button);
+}
+
+@keyframes slide {
+	0% {
+		/* transform: translateX(-2rem); */
+		opacity: 0;
+	}
+	100% {
+		/* transform: unset; */
+		opacity: 1;
+	}
+}
