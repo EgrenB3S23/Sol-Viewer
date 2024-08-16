@@ -6,6 +6,11 @@
 		<link rel="stylesheet" href="index.css"></link>
 		<link rel="stylesheet" href="menu.css"></link>
 		
+		<!-- Fonts: -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=New+Amsterdam&display=swap" rel="stylesheet">
+
 		<title>Sol-Viewer</title>
 	</head>
 	<body>
@@ -14,56 +19,40 @@
 			<button id="menuToggle" class="ui-element">
 				<img src="assets/slider-horizontal-3.svg"></img>
 			</button>
-			<div id= "selectedCelestialInfo">
-				<h4 id="selectedCelestialName">NAMN</h4>
-				<h4 id="selectedCelestialYearLength"></h4>
-				<h4 id="selectedCelestialDayLength"></h4>
-				<h4 id="selectedCelestialSatelites"></h4>
-			</div>
+
 		</aside> -->
 
-		<nav id="menu" class="">
-      <a href="#1" class="menu-item" style="--anim-index: 0">
-        <!-- --anim-index is used as a multiplier for animation-delay. Not sure if using inline css like this is better than creating individualized classes/IDs + css rules for each animated element. -->
-        <aside>01</aside>
-        <article>
-          <h3>Home</h3>
-          <p class="desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-        </article>
-      </a>
-      <a href="#2" class="menu-item" style="--anim-index: 1">
-        <aside>02</aside>
-        <article>
-          <h3>What we do</h3>
-          <p class="desc">
-            Sunt saepe vel mollitia, ab maxime fugit temporibus, fuga reprehenderit id quisquam
-            nostrum eveniet, esse.
-          </p>
-        </article>
-      </a>
-      <a href="#3" class="menu-item" style="--anim-index: 2">
-        <aside>03</aside>
-        <article>
-          <h3>Who we are</h3>
-          <p class="desc">
-            Nobis magnam beatae quibusdam sapiente quisquam libero tenetur alias corrupti aliquid?
-            Optio tenetur obcaecati doloribus beatae.
-          </p>
-        </article>
-      </a>
-      <a href="#4" class="menu-item" style="--anim-index: 3">
-        <aside>04</aside>
-        <article>
-          <h3>Contact</h3>
-          <p class="desc">
-            Nulla numquam, animi dolorum atque expedita odio aliquam quidem officiis? Molestias
-            voluptatum quasi debitis.
-          </p>
-        </article>
-      </a>
-    </nav>
-
-		
+		<aside id="menu" class="">
+			<h1 class="menuHeader">Menu</h1>
+			<div class="horizontalLine"></div>
+			<section id="settings">
+				<h2>
+					<input label="Animate" type="checkbox" name="Animate" id="checkboxAnimate" checked>
+				Animate</h2>
+				<h2>
+					<input label="Orbit rings" type="checkbox" name="Orbit rings" id="checkboxOrbitRings" checked>
+				Orbit rings</h2>
+				<h2>
+					<input label="Highlight rings" type="checkbox" name="Highlight rings" id="checkboxHighlightRings" checked>
+				Highlight rings</h2>
+			</section>
+			<div class="horizontalLine"></div>
+			<section id="tipClickACelestial">
+				<p>(Click a planet or moon to display info here)</p>
+			</section>
+			<section id= "selectedCelestialInfo" class="hide">
+				<!-- <h3>Name: </h3> -->
+				<!-- <p id="selectedCelestialName">(name)</p> -->
+				<h2 id="selectedCelestialName">(name)</h2>
+				<h3>Sidereal year length (in Earth days):</h3>
+				<p id="selectedCelestialYearLength">(year length)</p>
+				<h3>Sidereal day length (in Earth hours):</h3>
+				<p id="selectedCelestialDayLength">(day length)</p>
+				<h3>Satelites:</h3>
+				<p id="selectedCelestialSatelites">(satelites)</p>
+			</section>
+			<div class="horizontalLine"></div>
+    </aside>
 		
 		<h1 id="nameHeader">Sol-viewer</h1>
 		<div class="zoomable" style="transform: scale(0.001);">

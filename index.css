@@ -92,6 +92,10 @@ body {
 } */
 
 .zoomable {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+
 	/* transform: scale(1); */
 	transform: scale(0.001);
 	/* scale: 0.001; */
@@ -203,6 +207,22 @@ body {
 	pointer-events: none;
 }
 
+/* hide orbit rings */
+.planet.hide-orbit-rings::before,
+.moon.hide-orbit-rings::before {
+	display: none;
+}
+
+/* hide highlight rings */
+.planet.hide-highlight-rings::after,
+.moon.hide-highlight-rings::after {
+	display: none;
+}
+
+.hide {
+	display: none;
+}
+
 .star {
 	/* z-index: 13; */
 	/* width: 5rem; */
@@ -221,6 +241,7 @@ body {
 		transform: translateY(calc(calc(var(--scale-master) * var(--distance-planet)) * 100));
 		animation: orbit calc(5s * var(--orbit-planet)) linear 0s infinite normal forwards;
 		animation-composition: add;
+		/* animation-play-state: running; */
 
 		.moon {
 			background-color: chartreuse;
@@ -234,9 +255,27 @@ body {
 
 			animation: orbit calc(5s * var(--orbit-moon)) linear 0s infinite normal forwards;
 			animation-composition: add;
+			/* animation-play-state: running; */
+		}
+		/* .moon.pause {
+			animation-play-state: paused;
+		} */
+	}
+}
+
+.pause {
+	animation-play-state: paused;
+	> .planet {
+		animation-play-state: paused;
+		> .moon {
+			animation-play-state: paused;
 		}
 	}
 }
+
+/* .planet.pause {
+	animation-play-state: paused;
+} */
 
 @keyframes orbit {
 	from {
