@@ -121,10 +121,10 @@ function setupLocalStorage() {
 	}
 
 	// log any errors caught
-	if (errorsList.length === 0) {
-		console.log("localStorage setup completed without errors.");
-	} else {
+	if (errorsList.length > 0) {
 		console.log("localStorage setup encountered the following errors:", errorsList);
+	} else {
+		console.log("localStorage setup completed without errors.");
 	}
 }
 
@@ -191,9 +191,7 @@ function createMoonElements(planetId = null) {
 	console.log("F: createMoonElements:", planetId);
 
 	let moons = JSON.parse(localStorage.getItem("moons"));
-	// console.log("moons:", moons);
 	const myMoons = moons.filter((moon) => moon.aroundPlanet.planet === planetId); // from list of all moons, grab only the given planet's moons
-	console.log("myMoons:", myMoons);
 
 	const planetHTML = document.getElementById(planetId);
 
